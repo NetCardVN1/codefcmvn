@@ -1,0 +1,10 @@
+{
+  "name": "FC Mobile Code",
+  "short_name": "FCM Code",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0f1215",
+  "theme_color": "#00ff88",
+  "icons": [{ "src": "https://cdn-icons-png.flaticon.com/512/889/889512.png", "sizes": "512x512", "type": "image/png" }]
+}
+
