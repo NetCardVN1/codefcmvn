@@ -1,11 +1,15 @@
-<!DOCTYPE html>
+            <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FC Mobile VN - Giftcode</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00ff88">
+
     <style>
         :root {
             --primary-color: #00ff88;
@@ -27,38 +31,22 @@
         .container {
             width: 100%;
             max-width: 500px;
+            text-align: center;
+        }
+
+        /* Thêm Logo */
+        .logo-app {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px var(--primary-color);
         }
 
         .header {
-            text-align: center;
             margin-bottom: 30px;
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 10px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            margin: 10px 0;
-            letter-spacing: 1px;
-        }
-
-        .notif-prompt {
-            background: #222;
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
-            padding: 10px;
-            border-radius: 8px;
-            width: 100%;
-            cursor: pointer;
-            margin-bottom: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .notif-prompt:hover {
-            background: var(--primary-color);
-            color: #000;
         }
 
         .code-card {
@@ -66,14 +54,13 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            position: relative;
+            text-align: left;
             border: 1px solid #333;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .gift-info h3 {
             margin: 0;
-            font-size: 18px;
             color: var(--primary-color);
         }
 
@@ -81,17 +68,6 @@
             font-size: 14px;
             color: #ccc;
             margin: 8px 0;
-            line-height: 1.4;
-        }
-
-        .status {
-            display: inline-block;
-            background: #28a745;
-            color: white;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-bottom: 10px;
         }
 
         .code-box {
@@ -101,14 +77,7 @@
             border-radius: 8px;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px;
             border: 1px dashed #555;
-        }
-
-        .code-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            font-size: 16px;
         }
 
         .copy-btn {
@@ -119,7 +88,6 @@
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            text-transform: uppercase;
         }
 
         #toast {
@@ -131,18 +99,14 @@
             border-radius: 50px;
             padding: 12px;
             position: fixed;
-            z-index: 1;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             font-weight: bold;
+            z-index: 10;
         }
 
-        #toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
@@ -150,68 +114,60 @@
 <body>
 
 <div class="container">
+    <img src="logo.png" alt="Logo FC Mobile" class="logo-app">
+    
     <div class="header">
         <h1>FC MOBILE VN</h1>
-        <p>Trung tâm nhận Code chính thức</p>
+        <p>Cập nhật Code mới nhất</p>
     </div>
 
-    <button class="notif-prompt" onclick="enableNotif()">🔔 KIỂM TRA THÔNG BÁO MỚI</button>
-
     <div class="code-card">
-        <span class="status">CÒN HẠN</span>
         <div class="gift-info">
             <h3>CUNGDUAFCMLENTOP</h3>
-            <div class="gift-details">
-                • 15.000.000 Coins<br>
-                • 2.000 Gems
-            </div>
+            <div class="gift-details">• 15M Coins & 2000 Gems</div>
         </div>
         <div class="code-box">
             <span class="code-text">CUNGDUAFCMLENTOP</span>
-            <button class="copy-btn" onclick="copyCode('CUNGDUAFCMLENTOP')">SAO CHÉP</button>
+            <button class="copy-btn" onclick="copyCode('CUNGDUAFCMLENTOP')">COPY</button>
         </div>
     </div>
 
     <div class="code-card">
-        <span class="status">CÒN HẠN</span>
         <div class="gift-info">
             <h3>SONGDAUTOPDUOS</h3>
-            <div class="gift-details">
-                • Gói cầu thủ Top Duos (113 - 116)<br>
-                • Trạng thái: Untrade
-            </div>
+            <div class="gift-details">• Gói Top Duos (113 - 116)</div>
         </div>
         <div class="code-box">
             <span class="code-text">SONGDAUTOPDUOS</span>
-            <button class="copy-btn" onclick="copyCode('SONGDAUTOPDUOS')">SAO CHÉP</button>
+            <button class="copy-btn" onclick="copyCode('SONGDAUTOPDUOS')">COPY</button>
         </div>
     </div>
 </div>
 
-<div id="toast">Đã sao chép code!</div>
+<div id="toast">Đã sao chép!</div>
 
 <script>
-    // Đăng ký Service Worker cho PWABuilder
+    // Đăng ký Service Worker cho PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
     }
 
-    function showSystemNotif() {
-        if (Notification.permission === "granted") {
-            new Notification("🥳 FC Mobile đã cho ra code mới rồi!", {
-                body: "Hãy vào ứng dụng để sao chép và nhập code nhận quà ngay nào!",
-                icon: "https://upload.wikimedia.org/wikipedia/commons/a/ad/FC_Mobile_logo.png" // Bạn có thể thay link ảnh icon game tại đây
+    // 1. Tự động hỏi quyền khi vừa vào web
+    window.onload = function() {
+        if ("Notification" in window) {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    // Nếu đã cấp quyền, gửi thông báo chào mừng (cũng là để test)
+                    sendNotification();
+                }
             });
         }
-    }
+    };
 
-    function enableNotif() {
-        Notification.requestPermission().then(permission => {
-            if (permission === "granted") {
-                showSystemNotif();
-            } else {
-                alert("Bạn cần cho phép thông báo để nhận tin code mới!");
-            }
+    function sendNotification() {
+        new Notification("🥳 FC Mobile đã cho ra code mới rồi!", {
+            body: "Hãy vào ứng dụng để sao chép và nhập code nhận quà ngay nào!",
+            icon: "logo.png"
         });
     }
 
@@ -221,8 +177,8 @@
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
             
-            // Hiện thông báo hệ thống khi nhấn sao chép
-            showSystemNotif();
+            // Hiện lại thông báo khi copy (tùy chọn)
+            sendNotification();
         });
     }
 </script>
