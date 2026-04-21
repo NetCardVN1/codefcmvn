@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeMaster - Giftcode</title>
+    <title>CodeMaster - Giftcode FC Mobile</title>
     
     <link rel="icon" type="image/png" href="favicon.png">
-    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00ff88">
 
@@ -16,6 +15,7 @@
             --bg-color: #0f1215;
             --card-bg: #1e2329;
             --text-color: #ffffff;
+            --expired-color: #555;
         }
 
         body {
@@ -34,13 +34,13 @@
             text-align: center;
         }
 
-        /* Thêm Logo */
         .logo-app {
             width: 80px;
             height: 80px;
             margin-bottom: 10px;
             border-radius: 15px;
             box-shadow: 0 0 15px var(--primary-color);
+            object-fit: cover;
         }
 
         .header {
@@ -57,17 +57,19 @@
             text-align: left;
             border: 1px solid #333;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: 0.3s;
         }
 
         .gift-info h3 {
             margin: 0;
             color: var(--primary-color);
+            font-size: 18px;
         }
 
         .gift-details {
             font-size: 14px;
             color: #ccc;
-            margin: 8px 0;
+            margin: 5px 0;
         }
 
         .code-box {
@@ -78,21 +80,45 @@
             justify-content: space-between;
             align-items: center;
             border: 1px dashed #555;
+            margin-top: 10px;
+        }
+
+        .code-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         .copy-btn {
             background-color: var(--primary-color);
             color: #000;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 12px;
+        }
+
+        /* Style cho Code hết hạn */
+        .expired {
+            filter: grayscale(0.8);
+            opacity: 0.6;
+            border-color: #444;
+        }
+        .expired h3 {
+            text-decoration: line-through;
+            color: #888 !important;
+        }
+        .expired .copy-btn {
+            background-color: #444;
+            color: #888;
+            cursor: not-allowed;
         }
 
         #toast {
             visibility: hidden;
-            min-width: 250px;
+            min-width: 200px;
             background-color: var(--primary-color);
             color: #000;
             text-align: center;
@@ -114,67 +140,62 @@
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="Logo FC Mobile" class="logo-app">
+    <img src="logo.png" alt="Logo CodeMaster" class="logo-app">
     
     <div class="header">
         <h1>CodeMaster</h1>
         <p>Luôn cập nhật Code mới nhất cho bạn.</p>
     </div>
 
-   <div class="code-card">
+    <div class="code-card">
         <div class="gift-info">
             <h3>SONGDAUTOPDUOS</h3>
             <div class="gift-details">• Top Duos 113-116 (Untrade)</div>
-            <div class="gift-details">• W.Rooney (112 +5) </div>
+            <div class="gift-details">• W.Rooney (112 +5)</div>
         </div>
         <div class="code-box">
             <span class="code-text">SONGDAUTOPDUOS</span>
             <button class="copy-btn" onclick="copyCode('SONGDAUTOPDUOS')">COPY</button>
         </div>
     </div>
+
+    <div class="code-card expired">
+        <div class="gift-info">
+            <h3>CHINHPHUCCHAUAU</h3>
+            <div class="gift-details">• UEFA Dreamchasers 113-115 (HẾT HẠN)</div>
+            <div class="gift-details">• 1000 Gems (HẾT HẠN)</div>
+        </div>
+        <div class="code-box">
+            <span class="code-text">CHINHPHUCCHAUAU</span>
+            <button class="copy-btn" disabled>HẾT HẠN</button>
+        </div>
+    </div>
+
+    <div class="code-card expired">
+        <div class="gift-info">
+            <h3>CUNGDUAFCMLENTOP</h3>
+            <div class="gift-details">• 15M Coins (HẾT HẠN)</div>
+            <div class="gift-details">• 2000 Gems (HẾT HẠN)</div>
+        </div>
+        <div class="code-box">
+            <span class="code-text">CUNGDUAFCMLENTOP</span>
+            <button class="copy-btn" disabled>HẾT HẠN</button>
+        </div>
+    </div>
+
 </div>
-
-<div class="code-card" style="border-color: #ff4d4f; background-color: #fff1f0; filter: grayscale(0.5);"> 
-    <div class="gift-info"> 
-        <h3 style="color: #ff4d4f; text-decoration: line-through;">CHINHPHUCCHAUAU</h3> 
-        <div class="gift-details" style="color: #ff4d4f;">• UEFA Dreamchasers 113-115 (Untrade) (HẾT HẠN)</div> 
-        <div class="gift-details" style="color: #ff4d4f;">• 1000 Gems (HẾT HẠN)</div> 
-        <div class="gift-details" style="color: #ff4d4f;">• 15M Gems (HẾT HẠN)</div> 
-    </div> 
-    <div class="code-box" style="background: #ffa39e; border: 1px dashed #f5222d;"> 
-        <span class="code-text" style="color: #fff; font-weight: bold;">CHINHPHUCCHAUAU</span> 
-        <button class="copy-btn" style="background: #8c8c8c; cursor: not-allowed;" disabled>HẾT HẠN</button> 
-    </div> 
-</div>
-
-
-<div class="code-card" style="border-color: #ff4d4f; background-color: #fff1f0; filter: grayscale(0.5);"> 
-    <div class="gift-info"> 
-        <h3 style="color: #ff4d4f; text-decoration: line-through;">CUNGDUAFCMLENTOP</h3> 
-        <div class="gift-details" style="color: #ff4d4f;">• 15M Coins (HẾT HẠN)</div> 
-        <div class="gift-details" style="color: #ff4d4f;">• 2000 Gems (HẾT HẠN)</div> 
-    </div> 
-    <div class="code-box" style="background: #ffa39e; border: 1px dashed #f5222d;"> 
-        <span class="code-text" style="color: #fff; font-weight: bold;">CUNGDUAFCMLENTOP</span> 
-        <button class="copy-btn" style="background: #8c8c8c; cursor: not-allowed;" disabled>HẾT HẠN</button> 
-    </div> 
-</div>
-
 
 <div id="toast">Đã sao chép!</div>
 
 <script>
-    // Đăng ký Service Worker cho PWA
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
     }
 
-    // 1. Tự động hỏi quyền khi vừa vào web
     window.onload = function() {
         if ("Notification" in window) {
             Notification.requestPermission().then(permission => {
                 if (permission === "granted") {
-                    // Nếu đã cấp quyền, gửi thông báo chào mừng (cũng là để test)
                     sendNotification();
                 }
             });
@@ -193,8 +214,6 @@
             const toast = document.getElementById("toast");
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
-            
-            // Hiện lại thông báo khi copy (tùy chọn)
             sendNotification();
         });
     }
