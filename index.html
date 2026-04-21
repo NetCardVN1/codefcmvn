@@ -12,10 +12,9 @@
     <style>
         :root {
             --primary-color: #00ff88;
-            --bg-color: #0f1215;
+            --bg-color: #0a0c0e;
             --card-bg: #1e2329;
             --text-color: #ffffff;
-            --expired-bg: #161a1e;
         }
 
         body {
@@ -35,12 +34,11 @@
         }
 
         .logo-app {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             margin-bottom: 10px;
-            border-radius: 18px;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 0 15px var(--primary-color);
         }
 
         .header {
@@ -49,63 +47,66 @@
             padding-bottom: 10px;
         }
 
-        .header h1 {
-            margin: 5px 0;
-            font-size: 26px;
-            text-transform: uppercase;
+        /* --- THẺ CODE CÓ BANNER LÀM NỀN --- */
+        .code-card {
+            position: relative;
+            background-image: url('banner.jpg'); /* Banner làm nền */
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            overflow: hidden; /* Để lớp phủ không tràn ra ngoài bo góc */
+            border: 2px solid #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
         }
 
-        /* Thẻ quà tặng */
-        .code-card {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 15px;
-            margin-bottom: 20px;
+        .code-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        /* Lớp phủ đen mờ để làm nổi bật chữ */
+        .card-overlay {
+            background: rgba(0, 0, 0, 0.7); /* Độ mờ 0.7 giúp nhìn rõ ảnh nền bên dưới */
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
             text-align: left;
-            border: 1px solid #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .gift-info h3 {
             margin: 0 0 10px 0;
             color: var(--primary-color);
-            font-size: 18px;
-            letter-spacing: 0.5px;
-        }
-
-        /* Banner bên trong thẻ code */
-        .inner-banner {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 12px;
-            border: 1px solid #444;
-            display: block;
+            font-size: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
 
         .gift-details {
             font-size: 14px;
-            color: #ccc;
-            margin: 4px 0;
-            list-style: none;
-            padding: 0;
+            color: #eee;
+            margin: 5px 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,1);
         }
 
         /* Khung copy */
         .code-box {
             display: flex;
-            background: #000;
+            background: rgba(0, 0, 0, 0.8);
             padding: 10px;
-            border-radius: 8px;
+            border-radius: 10px;
             justify-content: space-between;
             align-items: center;
-            border: 1px dashed #555;
+            border: 1px solid var(--primary-color);
             margin-top: 15px;
         }
 
         .code-text {
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
-            font-size: 15px;
+            font-size: 16px;
             color: #fff;
         }
 
@@ -113,35 +114,19 @@
             background-color: var(--primary-color);
             color: #000;
             border: none;
-            padding: 8px 15px;
+            padding: 8px 18px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             text-transform: uppercase;
-            transition: 0.2s;
         }
 
-        .copy-btn:active {
-            transform: scale(0.9);
-        }
-
-        /* Style cho Code Hết Hạn */
+        /* Thẻ hết hạn (làm tối đi hẳn) */
         .expired {
-            opacity: 0.6;
-            filter: grayscale(0.9);
-            background-color: var(--expired-bg);
-        }
-        .expired h3 {
-            text-decoration: line-through;
-            color: #777 !important;
-        }
-        .expired .copy-btn {
-            background-color: #444;
-            color: #888;
-            cursor: not-allowed;
+            filter: grayscale(1);
+            opacity: 0.7;
         }
 
-        /* Toast thông báo */
         #toast {
             visibility: hidden;
             min-width: 200px;
@@ -149,13 +134,13 @@
             color: #000;
             text-align: center;
             border-radius: 50px;
-            padding: 12px 20px;
+            padding: 12px;
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             font-weight: bold;
-            z-index: 999;
+            z-index: 99;
         }
 
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
@@ -166,64 +151,61 @@
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="CodeMaster Logo" class="logo-app">
+    <img src="logo.png" alt="Logo" class="logo-app">
     
     <div class="header">
         <h1>CodeMaster</h1>
-        <p>Cập nhật Code FC Mobile mới nhất</p>
+        <p>Hệ thống Giftcode xịn nhất VN</p>
     </div>
 
     <div class="code-card">
-        <div class="gift-info">
-            <h3>SONGDAUTOPDUOS</h3>
+        <div class="card-overlay">
+            <div class="gift-info">
+                <h3>SONGDAUTOPDUOS</h3>
+                <div class="gift-details">• Top Duos 113-116 (Untrade)</div>
+                <div class="gift-details">• W.Rooney (112 +5)</div>
+            </div>
             
-            <img src="banner.jpg" alt="Banner Quà Tặng" class="inner-banner">
-
-            <div class="gift-details">• Top Duos 113-116 (Untrade)</div>
-            <div class="gift-details">• W.Rooney (112 +5)</div>
-        </div>
-        <div class="code-box">
-            <span class="code-text">SONGDAUTOPDUOS</span>
-            <button class="copy-btn" onclick="copyCode('SONGDAUTOPDUOS')">COPY</button>
+            <div class="code-box">
+                <span class="code-text">SONGDAUTOPDUOS</span>
+                <button class="copy-btn" onclick="copyCode('SONGDAUTOPDUOS')">COPY</button>
+            </div>
         </div>
     </div>
 
-    <div class="code-card expired">
-        <div class="gift-info">
-            <h3>CUNGDUAFCMLENTOP</h3>
-            <div class="gift-details">• 15M Coins (HẾT HẠN)</div>
-            <div class="gift-details">• 2000 Gems (HẾT HẠN)</div>
-        </div>
-        <div class="code-box">
-            <span class="code-text">CUNGDUAFCMLENTOP</span>
-            <button class="copy-btn" disabled>HẾT HẠN</button>
+    <div class="code-card expired" style="background-image: none; background-color: #161a1e;">
+        <div class="card-overlay">
+            <div class="gift-info">
+                <h3 style="color: #666;">CUNGDUAFCMLENTOP</h3>
+                <div class="gift-details" style="color: #666;">• 15M Coins (HẾT HẠN)</div>
+            </div>
+            <div class="code-box" style="border-color: #444;">
+                <span class="code-text" style="color: #666;">CUNGDUAFCMLENTOP</span>
+                <button class="copy-btn" style="background:#444; color:#666" disabled>HẾT HẠN</button>
+            </div>
         </div>
     </div>
 
 </div>
 
-<div id="toast">Đã sao chép thành công!</div>
+<div id="toast">✅ Đã sao chép thành công!</div>
 
 <script>
-    // Đăng ký Service Worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
     }
 
-    // Tự động hỏi quyền Notification khi vào App
-    window.addEventListener('load', () => {
+    window.onload = function() {
         if ("Notification" in window) {
-            Notification.requestPermission().then(permission => {
-                if (permission === "granted") {
-                    sendNotification();
-                }
+            Notification.requestPermission().then(p => {
+                if (p === "granted") sendNotification();
             });
         }
-    });
+    };
 
     function sendNotification() {
-        new Notification("🥳 FC Mobile đã có code mới!", {
-            body: "Vào ứng dụng sao chép quà ngay ní ơi!",
+        new Notification("🥳 FC Mobile có code mới rồi!", {
+            body: "Mở app để copy code nhận quà ngay ní ơi!",
             icon: "logo.png"
         });
     }
@@ -233,12 +215,9 @@
             const toast = document.getElementById("toast");
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
-            
-            // Hiện lại thông báo khi nhấn copy
             sendNotification();
         });
     }
 </script>
 </body>
 </html>
-
