@@ -15,7 +15,7 @@
             --bg-color: #0f1215;
             --card-bg: #1e2329;
             --text-color: #ffffff;
-            --expired-color: #555;
+            --expired-bg: #161a1e;
         }
 
         body {
@@ -38,40 +38,59 @@
             width: 80px;
             height: 80px;
             margin-bottom: 10px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px var(--primary-color);
+            border-radius: 18px;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
             object-fit: cover;
         }
 
         .header {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 10px;
         }
 
+        .header h1 {
+            margin: 5px 0;
+            font-size: 26px;
+            text-transform: uppercase;
+        }
+
+        /* Thẻ quà tặng */
         .code-card {
             background-color: var(--card-bg);
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             margin-bottom: 20px;
             text-align: left;
             border: 1px solid #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
 
         .gift-info h3 {
-            margin: 0;
+            margin: 0 0 10px 0;
             color: var(--primary-color);
             font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Banner bên trong thẻ code */
+        .inner-banner {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #444;
+            display: block;
         }
 
         .gift-details {
             font-size: 14px;
             color: #ccc;
-            margin: 5px 0;
+            margin: 4px 0;
+            list-style: none;
+            padding: 0;
         }
 
+        /* Khung copy */
         .code-box {
             display: flex;
             background: #000;
@@ -80,35 +99,41 @@
             justify-content: space-between;
             align-items: center;
             border: 1px dashed #555;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .code-text {
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
+            color: #fff;
         }
 
         .copy-btn {
             background-color: var(--primary-color);
             color: #000;
             border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
+            padding: 8px 15px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 12px;
+            text-transform: uppercase;
+            transition: 0.2s;
         }
 
-        /* Style cho Code hết hạn */
+        .copy-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Style cho Code Hết Hạn */
         .expired {
-            filter: grayscale(0.8);
             opacity: 0.6;
-            border-color: #444;
+            filter: grayscale(0.9);
+            background-color: var(--expired-bg);
         }
         .expired h3 {
             text-decoration: line-through;
-            color: #888 !important;
+            color: #777 !important;
         }
         .expired .copy-btn {
             background-color: #444;
@@ -116,6 +141,7 @@
             cursor: not-allowed;
         }
 
+        /* Toast thông báo */
         #toast {
             visibility: hidden;
             min-width: 200px;
@@ -123,13 +149,13 @@
             color: #000;
             text-align: center;
             border-radius: 50px;
-            padding: 12px;
+            padding: 12px 20px;
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             font-weight: bold;
-            z-index: 10;
+            z-index: 999;
         }
 
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
@@ -140,35 +166,25 @@
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="Logo CodeMaster" class="logo-app">
+    <img src="logo.png" alt="CodeMaster Logo" class="logo-app">
     
     <div class="header">
         <h1>CodeMaster</h1>
-        <p>Luôn cập nhật Code mới nhất cho bạn.</p>
+        <p>Cập nhật Code FC Mobile mới nhất</p>
     </div>
 
     <div class="code-card">
         <div class="gift-info">
             <h3>SONGDAUTOPDUOS</h3>
+            
+            <img src="banner.jpg" alt="Banner Quà Tặng" class="inner-banner">
+
             <div class="gift-details">• Top Duos 113-116 (Untrade)</div>
             <div class="gift-details">• W.Rooney (112 +5)</div>
         </div>
         <div class="code-box">
             <span class="code-text">SONGDAUTOPDUOS</span>
             <button class="copy-btn" onclick="copyCode('SONGDAUTOPDUOS')">COPY</button>
-        </div>
-    </div>
-
-    <div class="code-card expired">
-        <div class="gift-info">
-            <h3>CHINHPHUCCHAUAU</h3>
-            <div class="gift-details">• UEFA Dreamchasers 113-115 (HẾT HẠN)</div>
-            <div class="gift-details">• 1000 Gems (HẾT HẠN)</div>
-            <div class="gift-details">• 15M Coins (HẾT HẠN)</div>
-        </div>
-        <div class="code-box">
-            <span class="code-text">CHINHPHUCCHAUAU</span>
-            <button class="copy-btn" disabled>HẾT HẠN</button>
         </div>
     </div>
 
@@ -186,14 +202,16 @@
 
 </div>
 
-<div id="toast">Đã sao chép!</div>
+<div id="toast">Đã sao chép thành công!</div>
 
 <script>
+    // Đăng ký Service Worker
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js');
     }
 
-    window.onload = function() {
+    // Tự động hỏi quyền Notification khi vào App
+    window.addEventListener('load', () => {
         if ("Notification" in window) {
             Notification.requestPermission().then(permission => {
                 if (permission === "granted") {
@@ -201,11 +219,11 @@
                 }
             });
         }
-    };
+    });
 
     function sendNotification() {
-        new Notification("🥳 FC Mobile đã cho ra code mới rồi!", {
-            body: "Hãy vào ứng dụng để sao chép và nhập code nhận quà ngay nào!",
+        new Notification("🥳 FC Mobile đã có code mới!", {
+            body: "Vào ứng dụng sao chép quà ngay ní ơi!",
             icon: "logo.png"
         });
     }
@@ -215,9 +233,12 @@
             const toast = document.getElementById("toast");
             toast.className = "show";
             setTimeout(() => { toast.className = ""; }, 3000);
+            
+            // Hiện lại thông báo khi nhấn copy
             sendNotification();
         });
     }
 </script>
 </body>
 </html>
+
